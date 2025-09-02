@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>પાપ ભીરુતા ક્વિઝ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .language-btn {
+            transition: all 0.3s ease;
+        }
+        .language-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+        }
+        .correct {
+            background-color: #28a745 !important;
+            color: white !important;
+            border-color: #218838;
+        }
+        .wrong {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #c82333;
+        }
+        .explanation {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 1rem;
+        }
+        .explanation.show {
+            max-height: 500px; /* Adjust as needed */
+            padding: 1rem;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="quiz-container p-4 sm:p-6">
+        <header class="text-center mb-6">
+            <h1 id="quiz-title" class="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400">પાપ ભીરુતા ક્વિઝ</h1>
+            <p id="quiz-subtitle" class="text-md text-gray-600 dark:text-gray-400 mt-2">તમારી નૈતિક સમજને ચકાસો</p>
+        </header>
+
+        <div class="language-selector flex justify-center items-center space-x-2 sm:space-x-4 mb-8 p-2 bg-white dark:bg-gray-800 rounded-full shadow-md">
+            <button id="lang-gu" class="language-btn active bg-orange-500 text-white font-semibold py-2 px-4 rounded-full" onclick="changeLanguage('gu')">ગુજરાતી</button>
+            <button id="lang-hi" class="language-btn bg-blue-500 text-white font-semibold py-2 px-4 rounded-full" onclick="changeLanguage('hi')">हिंदी</button>
+            <button id="lang-en" class="language-btn bg-green-500 text-white font-semibold py-2 px-4 rounded-full" onclick="changeLanguage('en')">English</button>
+        </div>
+
+        <main id="quiz-content" class="space-y-8">
+            <!-- Questions will be injected here by JavaScript -->
+        </main>
+
+        <footer class="text-center mt-12">
+            <p class="text-sm text-gray-500">Manish V. Shah | WhatsApp: 94299 26447 | Vadodara</p>
+        </footer>
+    </div>
+
+    <script>
+        const quizData = [
+            // Chapter Questions
+            {
+                type: 'chapter',
+                question: {
+                    gu: "'પાપ ભીરુતા' નો સાચો અર્થ શું છે?",
+                    hi: "'पाप भीरुता' का सही अर्थ क्या है?",
+                    en: "What is the true meaning of 'Paap Bhiruta'?"
+                },
+                options: [
+                    { gu: "પાપ કર્યા પછી પકડાઈ જવાનો ડર.", hi: "पाप करने के बाद पकड़े जाने का डर।", en: "The fear of getting caught after sinning." },
+                    { gu: "પાપ કરવાના વિચાર માત્રથી અંતરમાં ડર પેદા થવો.", hi: "पाप करने के विचार मात्र से मन में डर पैदा होना।", en: "Fear arising from the mere thought of committing a sin." },
+                    { gu: "ફક્ત મોટા પાપોથી ડરવું.", hi: "केवल बड़े पापों से डरना।", en: "To be afraid of only major sins." },
+                    { gu: "લોકો શું કહેશે તેનો ડર.", hi: "लोग क्या कहेंगे इसका डर।", en: "The fear of what people will say." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "પાપ ભીરુતા એ પાપના વિચાર માત્રથી આત્મામાં થતી જાગૃતિ છે, જે આપણને ખોટા માર્ગે જતા રોકે છે.",
+                    hi: "पाप भीरुता पाप के विचार मात्र से आत्मा में होने वाली जागृति है, जो हमें गलत रास्ते पर जाने से रोकती है।",
+                    en: "Paap Bhiruta is the awakening in the soul from the mere thought of sin, which prevents us from going down the wrong path."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "પાઠ મુજબ 'માણસ હોવું' અને 'માણસાઈથી જીવવું' વચ્ચે મુખ્ય તફાવત શું છે?",
+                    hi: "पाठ के अनुसार 'इंसान होना' और 'इंसानियत से जीना' में मुख्य अंतर क्या है?",
+                    en: "According to the chapter, what is the main difference between 'being human' and 'living with humanity'?"
+                },
+                options: [
+                    { gu: "શિક્ષણ અને સંપત્તિ.", hi: "शिक्षा और धन।", en: "Education and wealth." },
+                    { gu: "શારીરિક દેખાવ.", hi: "शारीरिक रूप।", en: "Physical appearance." },
+                    { gu: "'પાપ' અને 'પુણ્ય'ની સાચી સમજ.", hi: " 'पाप' और 'पुण्य' की सही समझ।", en: "The correct understanding of 'sin' and 'virtue'." },
+                    { gu: "સામાજિક દરજ્જો.", hi: "सामाजिक दर्जा।", en: "Social status." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "મનુષ્ય જન્મ મળવો એ એક તક છે, પરંતુ પાપ-પુણ્યની સમજ કેળવીને માણસાઈથી જીવવું એ એક પુરુષાર્થ છે.",
+                    hi: "मनुष्य जन्म पाना एक अवसर है, लेकिन पाप-पुण्य की समझ विकसित करके इंसानियत से जीना एक पुरुषार्थ है।",
+                    en: "Being born human is an opportunity, but to live with humanity by cultivating an understanding of sin and virtue is an effort."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "આધુનિક યુગના 'ડિજિટલ પાપ'નું ઉદાહરણ કયું છે?",
+                    hi: "आधुनिक युग के 'डिजिटल पाप' का उदाहरण क्या है?",
+                    en: "Which of the following is an example of a 'digital sin' in the modern era?"
+                },
+                options: [
+                    { gu: "ટ્રાફિક નિયમ તોડવો.", hi: "ट्रैफिक नियम तोड़ना।", en: "Breaking a traffic rule." },
+                    { gu: "સાયબરબુલિંગ અને ફેક ન્યૂઝ ફેલાવવા.", hi: "साइबरबुलिंग और फेक न्यूज फैलाना।", en: "Cyberbullying and spreading fake news." },
+                    { gu: "પાણીનો બગાડ કરવો.", hi: "पानी बर्बाद करना।", en: "Wasting water." },
+                    { gu: "નિંદા કરવી.", hi: "निंदा करना।", en: "Gossiping." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "ઇન્ટરનેટ અને સોશિયલ મીડિયાનો દુરુપયોગ કરી કોઈને હેરાન કરવા કે ખોટી માહિતી ફેલાવવી એ આધુનિક ડિજિટલ પાપ છે.",
+                    hi: "इंटरनेट और सोशल मीडिया का दुरुपयोग करके किसी को परेशान करना या गलत सूचना फैलाना एक आधुनिक डिजिटल पाप है।",
+                    en: "Misusing the internet and social media to harass someone or spread misinformation is a modern digital sin."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "કર્મનો સિદ્ધાંત શું સમજાવે છે?",
+                    hi: "कर्म का सिद्धांत क्या समझाता है?",
+                    en: "What does the principle of Karma explain?"
+                },
+                options: [
+                    { gu: "પાપ કરવાથી કોઈ ફળ મળતું નથી.", hi: "पाप करने से कोई फल नहीं मिलता।", en: "There are no consequences for committing a sin." },
+                    { gu: "જેવું વાવશો, તેવું લણશો.", hi: "जैसा बोओगे, वैसा काटोगे।", en: "As you sow, so shall you reap." },
+                    { gu: "ફક્ત સારા કર્મોનું જ ફળ મળે છે.", hi: "केवल अच्छे कर्मों का ही फल मिलता है।", en: "Only good deeds have consequences." },
+                    { gu: "કર્મનો હિસાબ માફ થઈ શકે છે.", hi: "कर्म का हिसाब माफ किया जा सकता है।", en: "The account of karma can be forgiven." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "કર્મનો સિદ્ધાંત કહે છે કે દરેક ક્રિયાનું પરિણામ નિશ્ચિત છે. પાપનું ફળ હંમેશા દુઃખ જ હોય છે, જે ક્યારેક ને ક્યારેક ભોગવવું જ પડે છે.",
+                    hi: "कर्म का सिद्धांत कहता है कि हर क्रिया का परिणाम निश्चित है। पाप का फल हमेशा दुख ही होता है, जिसे कभी न कभी भोगना ही पड़ता है।",
+                    en: "The principle of Karma states that every action has a definite result. The fruit of sin is always suffering, which must be faced sooner or later."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "સાચો ડર અને ખોટા ડર વચ્ચે શું તફાવત છે?",
+                    hi: "सच्चे डर और झूठे डर में क्या अंतर है?",
+                    en: "What is the difference between true fear and false fear?"
+                },
+                options: [
+                    { gu: "કોઈ તફાવત નથી.", hi: "कोई अंतर नहीं है।", en: "There is no difference." },
+                    { gu: "સાચો ડર એ પાપના પરિણામનો છે, જ્યારે ખોટો ડર પકડાઈ જવાનો છે.", hi: "सच्चा डर पाप के परिणाम का है, जबकि झूठा डर पकड़े जाने का है।", en: "True fear is of the consequences of sin, while false fear is of getting caught." },
+                    { gu: "સાચો ડર ફક્ત પોલીસનો હોય છે.", hi: "सच्चा डर सिर्फ पुलिस का होता है।", en: "True fear is only of the police." },
+                    { gu: "ખોટો ડર સમાજનો હોય છે.", hi: "झूठा डर समाज का होता है।", en: "False fear is of society." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "સાચી પાપ ભીરુતા આપણને એકાંતમાં પણ પાપ કરતા રોકે છે કારણકે તે આત્માના પતનનો ડર છે, જયારે ખોટો ડર માત્ર બાહ્ય સજા કે બદનામીનો હોય છે.",
+                    hi: "सच्ची पाप भीरुता हमें एकांत में भी पाप करने से रोकती है क्योंकि यह आत्मा के पतन का डर है, जबकि झूठा डर केवल बाहरी सजा या बदनामी का होता है।",
+                    en: "True fear of sin stops us from sinning even in solitude because it is the fear of spiritual degradation, whereas false fear is only of external punishment or infamy."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "નાના પાપની કેવી અસર થઈ શકે છે?",
+                    hi: "छोटे पाप का क्या प्रभाव हो सकता है?",
+                    en: "What can be the effect of a small sin?"
+                },
+                options: [
+                    { gu: "કોઈ અસર થતી નથી, તે માફ થઈ જાય છે.", hi: "कोई प्रभाव नहीं होता, वह माफ हो जाता है।", en: "It has no effect, it gets forgiven." },
+                    { gu: "તે મોટા પાપનો દરવાજો ખોલી શકે છે.", hi: "यह बड़े पाप का दरवाजा खोल सकता है।", en: "It can open the door to a bigger sin." },
+                    { gu: "નાના પાપથી હંમેશા ફાયદો થાય છે.", hi: "छोटे पाप से हमेशा फायदा होता है।", en: "A small sin is always beneficial." },
+                    { gu: "ફક્ત બીજા લોકો પર અસર થાય છે.", hi: "सिर्फ दूसरे लोगों पर प्रभाव पड़ता है।", en: "It only affects other people." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "જેમ નાવમાં એક નાનું કાણું પણ તેને ડુબાડી શકે છે, તેમ એક નાનું પાપ પણ ભવિષ્યમાં મોટી ખરાબ આદતો અને મોટા પાપોનું કારણ બની શકે છે.",
+                    hi: "जैसे नाव में एक छोटा सा छेद भी उसे डुबा सकता है, वैसे ही एक छोटा सा पाप भी भविष्य में बड़ी बुरी आदतों और बड़े पापों का कारण बन सकता है।",
+                    en: "Just as a small hole can sink a large boat, a small sin can lead to major bad habits and bigger sins in the future."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "પાપ ભીરુતા કેળવવા માટે કયો માર્ગ યોગ્ય છે?",
+                    hi: "पाप भीरुता विकसित करने के लिए कौन सा मार्ग सही है?",
+                    en: "Which is a proper way to cultivate 'Paap Bhiruta'?"
+                },
+                options: [
+                    { gu: "ખરાબ સંગત અને નકારાત્મક વાતાવરણ.", hi: "बुरी संगत और नकारात्मक वातावरण।", en: "Bad company and a negative environment." },
+                    { gu: "સદ્વાંચન, જ્ઞાની લોકોને સાંભળવા અને ચિંતન કરવું.", hi: "सद्वाचन, ज्ञानी लोगों को सुनना और चिंतन करना।", en: "Reading good literature, listening to wise people, and contemplating." },
+                    { gu: "ફક્ત ધાર્મિક સ્થળોની મુલાકાત લેવી.", hi: "केवल धार्मिक स्थलों पर जाना।", en: "Only visiting religious places." },
+                    { gu: "બીજાના પાપોની ચર્ચા કરવી.", hi: "दूसरों के पापों पर चर्चा करना।", en: "Discussing the sins of others." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "સારા પુસ્તકો, સત્સંગ અને પાપના પરિણામો પર ચિંતન કરવાથી વિવેકબુદ્ધિ જાગૃત થાય છે, જે પાપ ભીરુતા કેળવવામાં મદદ કરે છે.",
+                    hi: "अच्छी किताबें, सत्संग और पाप के परिणामों पर चिंतन करने से विवेक जागृत होता है, जो पाप भीरुता विकसित करने में मदद करता है।",
+                    en: "Good books, good company, and contemplation on the consequences of sin awaken one's conscience, which helps in cultivating the fear of sin."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "પાઠમાં આપેલા વકીલના દીકરાના ઉદાહરણથી શું શીખ મળે છે?",
+                    hi: "पाठ में दिए गए वकील के बेटे के उदाहरण से क्या सीख मिलती है?",
+                    en: "What is the lesson from the example of the lawyer's son in the chapter?"
+                },
+                options: [
+                    { gu: "વકીલાત એ પૈસા કમાવવાનો શ્રેષ્ઠ માર્ગ છે.", hi: "वकालत पैसा कमाने का सबसे अच्छा तरीका है।", en: "Lawyering is the best way to make money." },
+                    { gu: "ગરીબોની હંમેશા અવગણના કરવી.", hi: "गरीबों की हमेशा उपेक्षा करनी चाहिए।", en: "One should always ignore the poor." },
+                    { gu: "સત્ય અને માનવતા હંમેશા વ્યવસાયથી ઉપર હોવા જોઈએ.", hi: "सत्य और मानवता हमेशा पेशे से ऊपर होने चाहिए।", en: "Truth and humanity should always be above one's profession." },
+                    { gu: "પિતાની દરેક વાત માનવી જોઈએ.", hi: "पिता की हर बात माननी चाहिए।", en: "One should obey everything their father says." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "આ પ્રસંગ શીખવે છે કે નૈતિક મૂલ્યો અને માનવતાને પ્રાથમિકતા આપવી એ સાચો ધર્મ છે, ભલે તેના માટે આર્થિક નુકસાન સહન કરવું પડે.",
+                    hi: "यह प्रसंग सिखाता है कि नैतिक मूल्यों और मानवता को प्राथमिकता देना ही सच्चा धर्म है, भले ही इसके लिए आर्थिक नुकसान उठाना पड़े।",
+                    en: "This incident teaches that prioritizing moral values and humanity is the true path, even if it means bearing a financial loss."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "'પાપવિરતિ' એટલે શું?",
+                    hi: "'पापविरति' का क्या अर्थ है?",
+                    en: "What is the meaning of 'Paapvirati'?"
+                },
+                options: [
+                    { gu: "પાપ કરવાથી ડરવું.", hi: "पाप करने से डरना।", en: "To be afraid of sinning." },
+                    { gu: "મન, વચન અને કર્મથી પાપનો સંપૂર્ણ ત્યાગ.", hi: "मन, वचन और कर्म से पाप का पूर्ण त्याग।", en: "Complete renunciation of sin by mind, speech, and action." },
+                    { gu: "પાપના કારણો વિશે વિચારવું.", hi: "पाप के कारणों के बारे में सोचना।", en: "Thinking about the causes of sin." },
+                    { gu: "ક્યારેક ક્યારેક પાપ કરવું.", hi: "कभी-कभी पाप करना।", en: "Sinning occasionally." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "'પાપવિરતિ' એ પાપ ભીરુતાની યાત્રાનું અંતિમ લક્ષ્ય છે, જ્યાં વ્યક્તિ દરેક રીતે પાપનો ત્યાગ કરે છે.",
+                    hi: "'पापविरति' पाप भीरुता की यात्रा का अंतिम लक्ष्य है, जहाँ व्यक्ति हर तरह से पाप का त्याग करता है।",
+                    en: "'Paapvirati' is the final goal of the journey of 'Paap Bhiruta', where a person completely renounces sin in all forms."
+                }
+            },
+             {
+                type: 'chapter',
+                question: {
+                    gu: "પરંપરાગત સાત વ્યસનો (મહાપાપો) માં કોનો સમાવેશ થતો નથી?",
+                    hi: "पारंपरिक सात व्यसनों (महापापों) में से कौन सा शामिल नहीं है?",
+                    en: "Which of the following is NOT included in the traditional seven major sins (Sapt Vyasan)?"
+                },
+                options: [
+                    { gu: "જુગાર (Gambling)", hi: "जुआ (Gambling)", en: "Gambling" },
+                    { gu: "ચોરી (Theft)", hi: "चोरी (Theft)", en: "Theft" },
+                    { gu: "શિકાર (Hunting)", hi: "शिकार (Hunting)", en: "Hunting" },
+                    { gu: "કરચોરી (Tax Evasion)", hi: "कर चोरी (Tax Evasion)", en: "Tax Evasion" }
+                ],
+                answer: 3,
+                explanation: {
+                    gu: "કરચોરી એ આધુનિક યુગનું આર્થિક પાપ છે, પરંતુ તે પરંપરાગત સાત મહાપાપોની યાદીમાં નથી.",
+                    hi: "कर चोरी आधुनिक युग का एक आर्थिक पाप है, लेकिन यह पारंपरिक सात महापापों की सूची में नहीं है।",
+                    en: "Tax evasion is a modern economic sin, but it is not on the list of the traditional seven major sins."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "રોજિંદા જીવનના 'વાણીના પાપ'નું ઉદાહરણ કયું છે?",
+                    hi: "दैनिक जीवन के 'वाणी के पाप' का उदाहरण क्या है?",
+                    en: "What is an example of a 'sin of speech' in daily life?"
+                },
+                options: [
+                    { gu: "કોઈનું ખરાબ ઈચ્છવું.", hi: "किसी का बुरा चाहना।", en: "Wishing ill for someone." },
+                    { gu: "ટ્રાફિક નિયમ તોડવો.", hi: "ट्रैफिक नियम तोड़ना।", en: "Breaking a traffic rule." },
+                    { gu: "જૂઠું બોલવું અને નિંદા કરવી.", hi: "झूठ बोलना और निंदा करना।", en: "Lying and gossiping." },
+                    { gu: "કામમાં બેદરકારી.", hi: "काम में लापरवाही।", en: "Negligence at work." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "આપણી વાણી દ્વારા કોઈને દુઃખ પહોંચાડવું, જેમ કે જૂઠું બોલીને કે કોઈની નિંદા કરીને, એ પણ એક પાપ છે.",
+                    hi: "हमारी वाणी से किसी को दुःख पहुँचाना, जैसे झूठ बोलकर या किसी की निंदा करके, भी एक पाप है।",
+                    en: "Hurting someone through our speech, such as by lying or gossiping, is also a form of sin."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "'વિચારના પાપ'નું ઉદાહરણ શું છે?",
+                    hi: "'विचार के पाप' का उदाहरण क्या है?",
+                    en: "What is an example of a 'sin of thought'?"
+                },
+                options: [
+                    { gu: "અપશબ્દોનો ઉપયોગ.", hi: "अपशब्दों का प्रयोग।", en: "Using abusive language." },
+                    { gu: "મનમાં કોઈ પ્રત્યે વેર રાખવું.", hi: "मन में किसी के प्रति द्वेष रखना।", en: "Holding a grudge against someone in your mind." },
+                    { gu: "કતારમાં ઉભા ન રહેવું.", hi: "कतार में खड़ा न होना।", en: "Not standing in a queue." },
+                    { gu: "ઓનલાઈન છેતરપિંડી.", hi: "ऑनलाइन धोखाधड़ी।", en: "Online fraud." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "પાપ ફક્ત ક્રિયાથી નથી થતું. કોઈનું ખરાબ વિચારવું કે મનમાં ઈર્ષ્યા કે વેર રાખવું એ પણ માનસિક પાપ છે.",
+                    hi: "पाप केवल क्रिया से नहीं होता। किसी का बुरा सोचना या मन में ईर्ष्या या द्वेष रखना भी एक मानसिक पाप है।",
+                    en: "Sin is not committed only through action. Thinking ill of someone or holding jealousy or grudges in mind is also a mental sin."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "કઈ બાબત પાપ સામેની શ્રેષ્ઠ રસી સમાન છે?",
+                    hi: "कौन सी बात पाप के खिलाफ सबसे अच्छी वैक्सीन की तरह है?",
+                    en: "What is considered the best vaccine against sin?"
+                },
+                options: [
+                    { gu: "ધન અને સત્તા.", hi: "धन और शक्ति।", en: "Wealth and power." },
+                    { gu: "સારી સંગત અને સદ્વિચાર.", hi: "अच्छी संगत और अच्छे विचार।", en: "Good company and good thoughts." },
+                    { gu: "કાયદાનો ડર.", hi: "कानून का डर।", en: "Fear of the law." },
+                    { gu: "એકલતા.", hi: "अकेलापन।", en: "Loneliness." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "સારા મિત્રો અને સકારાત્મક વિચારોનું વાતાવરણ આપણને પાપના માર્ગે જતા રોકે છે અને સાચા પથ પર ટકાવી રાખે છે.",
+                    hi: "अच्छे दोस्त और सकारात्मक विचारों का माहौल हमें पाप के रास्ते पर जाने से रोकता है और सही रास्ते पर बनाए रखता है।",
+                    en: "An environment of good friends and positive thoughts prevents us from treading the path of sin and keeps us on the right track."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "પાઠના સારાંશ મુજબ, દરરોજ રાત્રે સૂતા પહેલા શું કરવું જોઈએ?",
+                    hi: "पाठ के सारांश के अनुसार, हर रात सोने से पहले क्या करना चाहिए?",
+                    en: "According to the chapter's summary, what should one do every night before sleeping?"
+                },
+                options: [
+                    { gu: "આવતા દિવસનું આયોજન કરવું.", hi: "अगले दिन की योजना बनाना।", en: "Plan for the next day." },
+                    { gu: "પોતાના આખા દિવસના કાર્યોનું વિશ્લેષણ કરવું.", hi: "अपने पूरे दिन के कार्यों का विश्लेषण करना।", en: "Analyze one's actions of the entire day." },
+                    { gu: "મનોરંજન કરવું.", hi: "मनोरंजन करना।", en: "Entertain oneself." },
+                    { gu: "વહેલા સૂઈ જવું.", hi: "जल्दी सो जाना।", en: "Go to sleep early." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "રોજ રાત્રે આત્મ-ચિંતન કરવાથી આપણને આપણી ભૂલો સમજાય છે અને ભવિષ્યમાં તેને સુધારવાની પ્રેરણા મળે છે.",
+                    hi: "हर रात आत्म-चिंतन करने से हमें अपनी गलतियों का एहसास होता है और भविष्य में उन्हें सुधारने की प्रेरणा मिलती है।",
+                    en: "Daily self-reflection at night helps us understand our mistakes and inspires us to correct them in the future."
+                }
+            },
+            {
+                type: 'chapter',
+                question: {
+                    gu: "પાપ ભીરુતા કોનો મૂળભૂત ગુણ છે?",
+                    hi: "पाप भीरुता किसका मूल गुण है?",
+                    en: "Whose fundamental quality is 'Paap Bhiruta'?"
+                },
+                options: [
+                    { gu: "ફક્ત જૈન ધર્મ પાળનારાઓનો.", hi: "केवल जैन धर्म का पालन करने वालों का।", en: "Only of those who follow Jainism." },
+                    { gu: "ફક્ત ભારતીયોનો.", hi: "केवल भारतीयों का।", en: "Only of Indians." },
+                    { gu: "સંપૂર્ણ માનવતાનો.", hi: "संपूर्ण मानवता का।", en: "Of all of humanity." },
+                    { gu: "ફક્ત સાધુ-સંતોનો.", hi: "केवल साधु-संतों का।", en: "Only of saints and monks." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "પાપથી ડરવું એ કોઈ એક ધર્મની મર્યાદા નથી, પરંતુ તે દરેક મનુષ્યમાં હોવો જોઈતો માનવતાનો મૂળભૂત ગુણ છે.",
+                    hi: "पाप से डरना किसी एक धर्म तक सीमित नहीं है, बल्कि यह मानवता का एक मौलिक गुण है जो हर इंसान में होना चाहिए।",
+                    en: "The fear of sin is not limited to any one religion, but it is a fundamental quality of humanity that should be present in every human being."
+                }
+            },
+            // Scenario Questions
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમને રસ્તા પર કોઈનું પાકીટ મળે છે જેમાં પૈસા અને ઓળખકાર્ડ છે. તમારે શું કરવું જોઈએ?",
+                    hi: "आपको सड़क पर किसी का बटुआ मिलता है जिसमें पैसे और पहचान पत्र हैं। आपको क्या करना चाहिए?",
+                    en: "You find a wallet on the street with money and an ID card. What should you do?"
+                },
+                options: [
+                    { gu: "પૈસા રાખીને પાકીટ ફેંકી દેવું.", hi: "पैसे रखकर बटुआ फेंक देना चाहिए।", en: "Keep the money and throw away the wallet." },
+                    { gu: "નજીકના પોલીસ સ્ટેશનમાં જમા કરાવવું.", hi: "नजदीकी पुलिस स्टेशन में जमा करा देना चाहिए।", en: "Deposit it at the nearest police station." },
+                    { gu: "કંઈ ન કરવું અને ત્યાં જ છોડી દેવું.", hi: "कुछ न करके वहीं छोड़ देना चाहिए।", en: "Do nothing and leave it there." },
+                    { gu: "પૈસા વાપરી નાખવા.", hi: "पैसे खर्च कर देने चाहिए।", en: "Spend the money." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "પ્રામાણિકતા એ એક મોટો સદ્ગુણ છે. પાકીટ તેના મૂળ માલિક સુધી પહોંચાડવાનો પ્રયત્ન કરવો એ આપણી નૈતિક ફરજ છે.",
+                    hi: "ईमानदारी एक बहुत बड़ा गुण है। बटुए को उसके असली मालिक तक पहुँचाने का प्रयास करना हमारा नैतिक कर्तव्य है।",
+                    en: "Honesty is a great virtue. It is our moral duty to try and return the wallet to its rightful owner."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "દુકાનદાર ભૂલથી તમને વધુ છૂટા પૈસા પાછા આપે છે. તમે શું કરશો?",
+                    hi: "एक दुकानदार गलती से आपको ज़्यादा खुले पैसे वापस दे देता है। आप क्या करेंगे?",
+                    en: "A shopkeeper mistakenly gives you extra change back. What will you do?"
+                },
+                options: [
+                    { gu: "ચૂપચાપ પૈસા લઈ લેશો.", hi: "चुपचाप पैसे ले लेंगे।", en: "Quietly take the money." },
+                    { gu: "દુકાનદારને તેની ભૂલ જણાવી પૈસા પાછા આપશો.", hi: "दुकानदार को उसकी गलती बताकर पैसे वापस कर देंगे।", en: "Inform the shopkeeper of their mistake and return the money." },
+                    { gu: "દોડીને દુકાનથી દૂર જતા રહેશો.", hi: "दौड़कर दुकान से दूर चले जाएंगे।", en: "Run away from the shop." },
+                    { gu: "પૈસા દાન કરી દેશો.", hi: "पैसे दान कर देंगे।", en: "Donate the money." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "કોઈની ભૂલનો લાભ ઉઠાવવો એ અપ્રામાણિકતા અને એક પ્રકારનું પાપ છે. સાચો માર્ગ એ છે કે આપણે ઈમાનદારી બતાવીએ.",
+                    hi: "किसी की गलती का फायदा उठाना बेईमानी और एक तरह का पाप है। सही रास्ता यह है कि हम ईमानदारी दिखाएं।",
+                    en: "Taking advantage of someone's mistake is dishonest and a form of sin. The right path is to show integrity."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમારો મિત્ર કોઈના વિશે ખોટી અફવા ફેલાવી રહ્યો છે. તમારે શું કરવું જોઈએ?",
+                    hi: "आपका दोस्त किसी के बारे में झूठी अफवाह फैला रहा है। आपको क्या करना चाहिए?",
+                    en: "Your friend is spreading a false rumor about someone. What should you do?"
+                },
+                options: [
+                    { gu: "અફવા ફેલાવવામાં તેની મદદ કરશો.", hi: "अफवाह फैलाने में उसकी मदद करेंगे।", en: "Help them spread the rumor." },
+                    { gu: "તેને રોકવાનો પ્રયત્ન કરશો અને સમજાવશો કે આ ખોટું છે.", hi: "उसे रोकने की कोशिश करेंगे और समझाएंगे कि यह गलत है।", en: "Try to stop them and explain that it is wrong." },
+                    { gu: "તેની વાત સાંભળીને અવગણના કરશો.", hi: "उसकी बात सुनकर अनसुना कर देंगे।", en: "Listen to them and then ignore it." },
+                    { gu: "જેના વિશે અફવા છે તેને જઈને કહેશો.", hi: "जिसके बारे में अफवाह है, उसे जाकर बताएंगे।", en: "Go and tell the person the rumor is about." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "નિંદા અને જૂઠ ફેલાવવું એ વાણીનું પાપ છે. સાચા મિત્ર તરીકે આપણી ફરજ છે કે આપણે આપણા મિત્રને ખોટા કામ કરતા રોકીએ.",
+                    hi: "निंदा और झूठ फैलाना वाणी का पाप है। एक सच्चे दोस्त के रूप में, हमारा कर्तव्य है कि हम अपने दोस्त को गलत काम करने से रोकें।",
+                    en: "Gossiping and spreading lies is a sin of speech. As a true friend, it is our duty to stop our friend from doing something wrong."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "પરીક્ષામાં તમને નકલ કરવાની તક મળે છે. તમે શું પસંદ કરશો?",
+                    hi: "परीक्षा में आपको नकल करने का मौका मिलता है। आप क्या चुनेंगे?",
+                    en: "You get an opportunity to cheat in an exam. What will you choose?"
+                },
+                options: [
+                    { gu: "તરત જ નકલ કરી લેશો.", hi: "तुरंत नकल कर लेंगे।", en: "Immediately cheat." },
+                    { gu: "પ્રામાણિક રહીને જેટલું આવડે છે તેટલું જ લખશો.", hi: "ईमानदार रहकर जितना आता है उतना ही लिखेंगे।", en: "Remain honest and write only what you know." },
+                    { gu: "બીજાને નકલ કરવા માટે મદદ કરશો.", hi: "दूसरों को नकल करने में मदद करेंगे।", en: "Help others to cheat." },
+                    { gu: "શિક્ષકને ફરિયાદ કરશો.", hi: "शिक्षक से शिकायत करेंगे।", en: "Complain to the teacher." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "અપ્રામાણિકતાથી મળેલી સફળતા ક્ષણિક હોય છે. આપણી મહેનત અને ઈમાનદારી જ આપણને લાંબા ગાળે સાચો સંતોષ અને સફળતા અપાવે છે.",
+                    hi: "बेईमानी से मिली सफलता क्षणिक होती है। हमारी मेहनत और ईमानदारी ही हमें लंबे समय में सच्ची संतुष्टि और सफलता दिलाती है।",
+                    en: "Success achieved through dishonesty is temporary. Our hard work and honesty give us true satisfaction and success in the long run."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમે ભૂલથી લાઈબ્રેરીનું પુસ્તક ફાડી નાખો છો. જવાબદાર પગલું કયું છે?",
+                    hi: "आप गलती से पुस्तकालय की एक किताब फाड़ देते हैं। जिम्मेदार कदम क्या होगा?",
+                    en: "You accidentally tear a page in a library book. What is the responsible action?"
+                },
+                options: [
+                    { gu: "ચૂપચાપ પુસ્તક પાછું મૂકી દેશો.", hi: "चुपचाप किताब वापस रख देंगे।", en: "Quietly put the book back." },
+                    { gu: "લાઈબ્રેરિયનને જાણ કરશો અને નુકસાનની ભરપાઈ કરવાની તૈયારી બતાવશો.", hi: "लाइब्रेरियन को सूचित करेंगे और नुकसान की भरपाई करने की पेशकश करेंगे।", en: "Inform the librarian and offer to pay for the damage." },
+                    { gu: "ફાટેલો કાગળ છુપાવી દેશો.", hi: "फटे हुए पन्ने को छिपा देंगे।", en: "Hide the torn page." },
+                    { gu: "બીજા કોઈ પર દોષ નાખી દેશો.", hi: "किसी और पर दोष मढ़ देंगे।", en: "Blame it on someone else." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "આપણી ભૂલનો સ્વીકાર કરવો અને તેની જવાબદારી લેવી એ હિંમત અને ઈમાનદારીની નિશાની છે. જવાબદારીથી ભાગવું એ એક પ્રકારનું પાપ છે.",
+                    hi: "अपनी गलती स्वीकार करना और उसकी जिम्मेदारी लेना साहस और ईमानदारी का प्रतीक है। जिम्मेदारी से भागना एक प्रकार का पाप है।",
+                    en: "Accepting our mistakes and taking responsibility for them is a sign of courage and honesty. Shirking responsibility is a form of sin."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "સોશિયલ મીડિયા પર તમને કોઈ નફરત ફેલાવતી કોમેન્ટ દેખાય છે. નૈતિક પગલું શું છે?",
+                    hi: "सोशल मीडिया पर आपको कोई नफरत फैलाने वाली टिप्पणी दिखाई देती है। नैतिक कदम क्या है?",
+                    en: "You see a hateful comment on social media. What is the ethical action?"
+                },
+                options: [
+                    { gu: "તેને લાઈક અને શેર કરશો.", hi: "उसे लाइक और शेयर करेंगे।", en: "Like and share it." },
+                    { gu: "કોમેન્ટ કરનાર સાથે ઝઘડો કરશો.", hi: "टिप्पणी करने वाले से बहस करेंगे।", en: "Argue with the commenter." },
+                    { gu: "તેને અવગણીને આગળ વધશો.", hi: "उसे अनदेखा कर देंगे।", en: "Ignore it and move on." },
+                    { gu: "તે કોમેન્ટને રિપોર્ટ કરશો અને ફેલાવતા રોકશો.", hi: "उस टिप्पणी की रिपोर्ट करेंगे और उसे फैलने से रोकेंगे।", en: "Report the comment and stop it from spreading." }
+                ],
+                answer: 3,
+                explanation: {
+                    gu: "નફરત અને ખોટી માહિતી ફેલાવવી એ ડિજિટલ પાપ છે. તેને રોકવામાં મદદ કરવી એ આપણી સામાજિક જવાબદારી છે.",
+                    hi: "नफरत और गलत सूचना फैलाना एक डिजिटल पाप है। इसे रोकने में मदद करना हमारी सामाजिक जिम्मेदारी है।",
+                    en: "Spreading hate and misinformation is a digital sin. Helping to stop it is our social responsibility."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમે જુઓ છો કે કોઈ જાહેર સ્થળે કચરો ફેંકી રહ્યું છે. તમારે શું કરવું જોઈએ?",
+                    hi: "आप देखते हैं कि कोई सार्वजनिक स्थान पर कचरा फेंक रहा है। आपको क्या करना चाहिए?",
+                    en: "You see someone littering in a public place. What should you do?"
+                },
+                options: [
+                    { gu: "તેમની અવગણના કરવી.", hi: "उन्हें अनदेखा कर देना चाहिए।", en: "Ignore them." },
+                    { gu: "તેમની સાથે ઝઘડો કરવો.", hi: "उनसे झगड़ा करना चाहिए।", en: "Argue with them." },
+                    { gu: "નમ્રતાપૂર્વક તેમને કચરાપેટીનો ઉપયોગ કરવા વિનંતી કરવી.", hi: "विनम्रतापूर्वक उनसे कूड़ेदान का उपयोग करने का अनुरोध करना चाहिए।", en: "Politely request them to use the dustbin." },
+                    { gu: "તમે પણ ત્યાં કચરો ફેંકશો.", hi: "आप भी वहीं कचरा फेंक देंगे।", en: "Also throw your garbage there." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "પર્યાવરણને નુકસાન પહોંચાડવું એ પર્યાવરણીય પાપ છે. સ્વચ્છતા જાળવવા માટે બીજાને પ્રેમથી સમજાવવું એ એક સારી નાગરિક ફરજ છે.",
+                    hi: "पर्यावरण को नुकसान पहुँचाना एक पर्यावरणीय पाप है। स्वच्छता बनाए रखने के लिए दूसरों को प्यार से समझाना एक अच्छा नागरिक कर्तव्य है।",
+                    en: "Harming the environment is an environmental sin. Politely encouraging others to maintain cleanliness is a good civic duty."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમારા માતા-પિતા તમને કોઈ કામ સોંપે છે, પણ તમને ટીવી જોવું છે. આદરપૂર્ણ વર્તન કયું છે?",
+                    hi: "आपके माता-पिता आपको कोई काम सौंपते हैं, लेकिन आप टीवी देखना चाहते हैं। सम्मानजनक व्यवहार क्या है?",
+                    en: "Your parents ask you to do a chore, but you want to watch TV. What is the respectful behavior?"
+                },
+                options: [
+                    { gu: "તેમની વાત ન સાંભળવી.", hi: "उनकी बात नहीं सुनना।", en: "Not listening to them." },
+                    { gu: "ગુસ્સો કરવો.", hi: "गुस्सा करना।", en: "Getting angry." },
+                    { gu: "પહેલા તેમનું કામ પૂરું કરવું અને પછી ટીવી જોવું.", hi: "पहले उनका काम खत्म करना और फिर टीवी देखना।", en: "Finish their work first and then watch TV." },
+                    { gu: "કામ અધૂરું છોડી દેવું.", hi: "काम अधूरा छोड़ देना।", en: "Leave the work incomplete." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "માતા-પિતાની અવગણના કરવી કે તેમનું અપમાન કરવું એ સામાજિક અને નૈતિક પાપ છે. તેમની આજ્ઞાનું પાલન કરવું એ આપણી ફરજ છે.",
+                    hi: "माता-पिता की उपेक्षा करना या उनका अपमान करना एक सामाजिक और नैतिक पाप है। उनकी आज्ञा का पालन करना हमारा कर्तव्य है।",
+                    en: "Ignoring or disrespecting one's parents is a social and moral sin. It is our duty to obey them."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમને કામ જલ્દી કરવા માટે કોઈ લાંચની ઓફર કરે છે. તમારી પ્રતિક્રિયા શું હશે?",
+                    hi: "कोई आपको काम जल्दी करवाने के लिए रिश्वत की पेशकश करता है। आपकी प्रतिक्रिया क्या होगी?",
+                    en: "Someone offers you a bribe to get their work done faster. What will be your reaction?"
+                },
+                options: [
+                    { gu: "લાંચ લઈ લેશો.", hi: "रिश्वत ले लेंगे।", en: "Accept the bribe." },
+                    { gu: "સ્પષ્ટપણે ના પાડી દેશો અને ઈમાનદારીથી કામ કરશો.", hi: "स्पष्ट रूप से मना कर देंगे और ईमानदारी से काम करेंगे।", en: "Clearly refuse and work honestly." },
+                    { gu: "વધુ લાંચની માંગણી કરશો.", hi: "और अधिक रिश्वत की मांग करेंगे।", en: "Demand a higher bribe." },
+                    { gu: "બીજા કોઈને લાંચ લેવા માટે કહેશો.", hi: "किसी और को रिश्वत लेने के लिए कहेंगे।", en: "Ask someone else to take the bribe." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "ભ્રષ્ટાચાર એ એક ગંભીર આર્થિક અને સામાજિક પાપ છે જે સિસ્ટમને ખોખલી કરી નાખે છે. ઈમાનદારી જાળવવી એ શ્રેષ્ઠ નીતિ છે.",
+                    hi: "भ्रष्टाचार एक गंभीर आर्थिक और सामाजिक पाप है जो व्यवस्था को खोखला कर देता है। ईमानदारी बनाए रखना ही सबसे अच्छी नीति है।",
+                    en: "Corruption is a serious economic and social sin that hollows out the system. Maintaining honesty is the best policy."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમારા સહકર્મીથી ભૂલ થઈ છે, પણ તમે સરળતાથી દોષનો ટોપલો તેના પર ઢોળી શકો છો. તમે શું કરશો?",
+                    hi: "आपके सहकर्मी से कोई गलती हुई है, लेकिन आप आसानी से दोष उस पर मढ़ सकते हैं। आप क्या करेंगे?",
+                    en: "Your colleague made a mistake, but you can easily blame them for it. What will you do?"
+                },
+                options: [
+                    { gu: "બધો દોષ તેના પર નાખી દેશો.", hi: "सारा दोष उस पर डाल देंगे।", en: "Put all the blame on them." },
+                    { gu: "સત્ય શું છે તે જણાવીને પરિસ્થિતિને સંભાળવાનો પ્રયત્ન કરશો.", hi: "सच बताकर स्थिति को संभालने की कोशिश करेंगे।", en: "Tell the truth and try to handle the situation." },
+                    { gu: "નોકરી છોડી દેશો.", hi: "नौकरी छोड़ देंगे।", en: "Quit the job." },
+                    { gu: "તેમની ભૂલ છુપાવવામાં મદદ કરશો.", hi: "उनकी गलती छिपाने में मदद करेंगे।", en: "Help them hide their mistake." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "નિર્દોષ વ્યક્તિ પર દોષ નાખવો એ અન્યાય અને પાપ છે. સત્યનો સાથ આપવો અને જવાબદારીપૂર્વક વર્તવું એ જ સાચો માર્ગ છે.",
+                    hi: "एक निर्दोष व्यक्ति पर दोष मढ़ना अन्याय और पाप है। सच्चाई का साथ देना और जिम्मेदारी से व्यवहार करना ही सही रास्ता है।",
+                    en: "Blaming an innocent person is an injustice and a sin. Supporting the truth and acting responsibly is the right path."
+                }
+            },
+             {
+                type: 'scenario',
+                question: {
+                    gu: "તમે લાઈનમાં ઉભા છો અને તમને ઉતાવળ છે. શું તમે લાઈન તોડીને આગળ જશો?",
+                    hi: "आप कतार में खड़े हैं और आपको जल्दी है। क्या आप कतार तोड़कर आगे बढ़ेंगे?",
+                    en: "You are in a queue and in a hurry. Will you break the line and move ahead?"
+                },
+                options: [
+                    { gu: "હા, કારણકે મને ઉતાવળ છે.", hi: "हाँ, क्योंकि मुझे जल्दी है।", en: "Yes, because I am in a hurry." },
+                    { gu: "ના, હું મારા વારાની રાહ જોઈશ.", hi: "नहीं, मैं अपनी बारी का इंतजार करूँगा।", en: "No, I will wait for my turn." },
+                    { gu: "બીજાને લાઈન તોડવા માટે ઉશ્કેરીશ.", hi: "दूसरों को कतार तोड़ने के लिए उकसाऊंगा।", en: "Incite others to break the line." },
+                    { gu: "કોઈને વિનંતી કરીશ કે મને આગળ જવા દે.", hi: "किसी से अनुरोध करूँगा कि मुझे आगे जाने दें।", en: "Request someone to let me go ahead." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "નિયમો તોડવા અને બીજાના અધિકારનું ઉલ્લંઘન કરવું એ વ્યવહારનું પાપ છે. ધીરજ અને શિસ્ત એ સારા નાગરિકના લક્ષણ છે.",
+                    hi: "नियम तोड़ना और दूसरों के अधिकारों का उल्लंघन करना व्यवहार का पाप है। धैर्य और अनुशासन एक अच्छे नागरिक के लक्षण हैं।",
+                    en: "Breaking rules and infringing on others' rights is a sin of behavior. Patience and discipline are marks of a good citizen."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમે એક ઘાયલ રખડતા પ્રાણીને જુઓ છો. તમારો પ્રથમ વિચાર શું હોવો જોઈએ?",
+                    hi: "आप एक घायल आवारा जानवर देखते हैं। आपका पहला विचार क्या होना चाहिए?",
+                    en: "You see an injured stray animal. What should be your first thought?"
+                },
+                options: [
+                    { gu: "તેને અવગણીને જતા રહેવું.", hi: "उसे अनदेखा कर देना।", en: "Ignore it and walk away." },
+                    { gu: "તેનાથી દૂર રહેવું કારણકે તે ગંદુ છે.", hi: "उससे दूर रहना क्योंकि वह गंदा है।", en: "Stay away because it is dirty." },
+                    { gu: "તેને કેવી રીતે મદદ કરી શકાય તે વિચારવું.", hi: "यह सोचना कि उसकी मदद कैसे की जा सकती है।", en: "Thinking about how it can be helped." },
+                    { gu: "તેનો ફોટો પાડીને સોશિયલ મીડિયા પર પોસ્ટ કરવો.", hi: "उसकी तस्वीर खींचकर सोशल मीडिया पर पोस्ट करना।", en: "Take its photo and post it on social media." }
+                ],
+                answer: 2,
+                explanation: {
+                    gu: "દરેક જીવ પ્રત્યે કરુણા રાખવી એ માનવતાનો મૂળભૂત ગુણ છે. કોઈની મજબૂરી જોઈને મદદ કરવી એ પુણ્યનું કામ છે.",
+                    hi: "हर जीव के प्रति करुणा रखना मानवता का मूल गुण है। किसी की मजबूरी देखकर मदद करना पुण्य का काम है।",
+                    en: "Having compassion for every living being is a fundamental human quality. Helping someone in need is a virtuous act."
+                }
+            },
+            {
+                type: 'scenario',
+                question: {
+                    gu: "તમે મિત્રને મદદ કરવાનું વચન આપ્યું છે, પણ પછી તમને વધુ સારી ઓફર મળે છે. તમારે શું કરવું જોઈએ?",
+                    hi: "आपने एक दोस्त की मदद करने का वादा किया है, लेकिन फिर आपको एक बेहतर प्रस्ताव मिलता है। आपको क्या करना चाहिए?",
+                    en: "You have promised to help a friend, but then a better offer comes up. What should you do?"
+                },
+                options: [
+                    { gu: "મિત્રને આપેલું વચન તોડીને નવી ઓફર સ્વીકારવી.", hi: "दोस्त से किया वादा तोड़कर नया प्रस्ताव स्वीकार कर लेना।", en: "Break the promise to your friend and accept the new offer." },
+                    { gu: "મિત્રને આપેલું વચન પાળવું.", hi: "दोस्त से किया वादा निभाना।", en: "Keep the promise made to your friend." },
+                    { gu: "મિત્રનો ફોન ન ઉપાડવો.", hi: "दोस्त का फोन नहीं उठाना।", en: "Not pick up your friend's call." },
+                    { gu: "બંને જગ્યાએ જવાનો પ્રયત્ન કરવો અને બંને કામ બગાડવા.", hi: "दोनों जगहों पर जाने की कोशिश करना और दोनों काम बिगाड़ देना।", en: "Try to go to both places and mess up both tasks." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "વચન તોડવું એ સંબંધોમાં અપ્રામાણિકતા છે, જે એક સામાજિક પાપ છે. આપેલા વચનને નિભાવવું એ વિશ્વાસ અને ચારિત્ર્યની નિશાની છે.",
+                    hi: "वादा तोड़ना रिश्तों में बेईमानी है, जो एक सामाजिक पाप है। दिए गए वादे को निभाना विश्वास और चरित्र का प्रतीक है।",
+                    en: "Breaking a promise is dishonesty in relationships, which is a social sin. Keeping a promise is a sign of trust and character."
+                }
+            },
+             {
+                type: 'scenario',
+                question: {
+                    gu: "તમે એક પદ પર છો જ્યાં તમે નોકરી માટે તમારા સંબંધીની તરફેણ કરી શકો છો. ન્યાયી પગલું શું છે?",
+                    hi: "आप एक ऐसे पद पर हैं जहाँ आप नौकरी के लिए अपने किसी रिश्तेदार का पक्ष ले सकते हैं। न्यायपूर्ण कदम क्या है?",
+                    en: "You are in a position where you can favor your relative for a job. What is the just action?"
+                },
+                options: [
+                    { gu: "સંબંધીને નોકરી આપી દેવી.", hi: "रिश्तेदार को नौकरी दे देना।", en: "Give the job to the relative." },
+                    { gu: "યોગ્યતાના આધારે નિષ્પક્ષ રીતે ઉમેદવારની પસંદગી કરવી.", hi: "योग्यता के आधार पर निष्पक्ष रूप से उम्मीदवार का चयन करना।", en: "Select the candidate impartially based on merit." },
+                    { gu: "નોકરી માટે કોઈની પણ પસંદગી ન કરવી.", hi: "नौकरी के लिए किसी का भी चयन न करना।", en: "Not select anyone for the job." },
+                    { gu: "ઇન્ટરવ્યુ પ્રક્રિયા રદ કરી દેવી.", hi: "साक्षात्कार प्रक्रिया रद्द कर देना।", en: "Cancel the interview process." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "પદનો દુરુપયોગ કરી ભાઈ-ભત્રીજાવાદ કરવો એ ભ્રષ્ટાચાર અને અન્યાય છે. ન્યાય અને સમાન તકનો સિદ્ધાંત જાળવવો એ નૈતિક ફરજ છે.",
+                    hi: "पद का दुरुपयोग करके भाई-भतीजावाद करना भ्रष्टाचार और अन्याय है। न्याय और समान अवसर के सिद्धांत को बनाए रखना एक नैतिक कर्तव्य है।",
+                    en: "Misusing one's position for nepotism is corruption and injustice. It is a moral duty to uphold the principle of justice and equal opportunity."
+                }
+            },
+             {
+                type: 'scenario',
+                question: {
+                    gu: "તમને ખબર પડે કે તમારી કંપની પર્યાવરણીય નિયમોનું ઉલ્લંઘન કરી રહી છે. સાચું પગલું શું છે?",
+                    hi: "आपको पता चलता है कि आपकी कंपनी पर्यावरणीय नियमों का उल्लंघन कर रही है। सही कदम क्या है?",
+                    en: "You find out your company is violating environmental regulations. What is the right step?"
+                },
+                options: [
+                    { gu: "ચૂપ રહેવું કારણકે નોકરી જતી રહેશે.", hi: "चुप रहना क्योंकि नौकरी चली जाएगी।", en: "Stay silent to protect your job." },
+                    { gu: "યોગ્ય અધિકારીઓને તેની જાણ કરવી.", hi: "उचित अधिकारियों को इसकी सूचना देना।", en: "Report it to the proper authorities." },
+                    { gu: "કંપની છોડી દેવી.", hi: "कंपनी छोड़ देना।", en: "Quit the company." },
+                    { gu: "સોશિયલ મીડિયા પર કંપનીને બદનામ કરવી.", hi: "सोशल मीडिया पर कंपनी को बदनाम करना।", en: "Defame the company on social media." }
+                ],
+                answer: 1,
+                explanation: {
+                    gu: "પર્યાવરણને નુકસાન પહોંચાડવું એ એક મોટું પાપ છે. અન્યાય સામે અવાજ ઉઠાવવો, ભલે તેમાં જોખમ હોય, એ એક હિંમતભર્યું અને નૈતિક કાર્ય છે.",
+                    hi: "पर्यावरण को नुकसान पहुँचाना एक बड़ा पाप है। अन्याय के खिलाफ आवाज उठाना, भले ही इसमें जोखिम हो, एक साहसी और नैतिक कार्य है।",
+                    en: "Harming the environment is a major sin. Speaking up against injustice, even if it's risky, is a courageous and ethical act."
+                }
+            }
+        ];
+
+        let currentLanguage = 'gu';
+
+        const quizTitleEl = document.getElementById('quiz-title');
+        const quizSubtitleEl = document.getElementById('quiz-subtitle');
+        const quizContentEl = document.getElementById('quiz-content');
+
+        const uiText = {
+            gu: {
+                title: 'પાપ ભીરુતા ક્વિઝ',
+                subtitle: 'તમારી નૈતિક સમજને ચકાસો'
+            },
+            hi: {
+                title: 'पाप भीरुता प्रश्नोत्तरी',
+                subtitle: 'अपनी नैतिक समझ का परीक्षण करें'
+            },
+            en: {
+                title: 'Moral Guidance Quiz',
+                subtitle: 'Test your ethical understanding'
+            }
+        };
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function renderQuiz() {
+            quizTitleEl.textContent = uiText[currentLanguage].title;
+            quizSubtitleEl.textContent = uiText[currentLanguage].subtitle;
+            quizContentEl.innerHTML = '';
+            
+            quizData.forEach((item, index) => {
+                const questionTypeLabel = item.type === 'chapter' ? 
+                    {gu: 'પ્રકરણ આધારિત', hi: 'अध्याय आधारित', en: 'Chapter Based'} :
+                    {gu: 'વ્યવહારુ ઉદાહરણ', hi: 'व्यावहारिक परिदृश्य', en: 'Practical Scenario'};
+
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-card bg-white dark:bg-gray-800 p-5 rounded-xl shadow-lg';
+                
+                let optionsHtml = '';
+                item.options.forEach((option, optionIndex) => {
+                    optionsHtml += `<button class="option-btn w-full text-left p-3 my-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900" onclick="checkAnswer(${index}, ${optionIndex}, this)">
+                        ${option[currentLanguage]}
+                    </button>`;
+                });
+
+                questionElement.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-blue-700 dark:text-blue-300">પ્રશ્ન ${index + 1}</h2>
+                        <span class="text-xs font-medium text-white ${item.type === 'chapter' ? 'bg-purple-500' : 'bg-teal-500'} px-2 py-1 rounded-full">${questionTypeLabel[currentLanguage]}</span>
+                    </div>
+                    <p class="text-lg mb-4">${item.question[currentLanguage]}</p>
+                    <div id="options-${index}" class="options-container">
+                        ${optionsHtml}
+                    </div>
+                    <div id="explanation-${index}" class="explanation mt-4 bg-gray-100 dark:bg-gray-700 rounded-lg border-l-4 border-blue-500">
+                        <p>${item.explanation[currentLanguage]}</p>
+                    </div>
+                `;
+                quizContentEl.appendChild(questionElement);
+            });
+        }
+        
+        function checkAnswer(questionIndex, selectedOptionIndex, element) {
+            const question = quizData[questionIndex];
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const explanationEl = document.getElementById(`explanation-${questionIndex}`);
+
+            // Disable all buttons in this question card
+            const buttons = optionsContainer.getElementsByTagName('button');
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+            optionsContainer.classList.add('disabled');
+
+            if (selectedOptionIndex === question.answer) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('wrong');
+                buttons[question.answer].classList.add('correct');
+            }
+            
+            // Show explanation
+            explanationEl.classList.add('show');
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button style
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500', 'bg-blue-500', 'bg-green-500');
+                if (btn.id === `lang-${lang}`) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.getElementById('lang-gu').classList.add('bg-orange-500');
+            document.getElementById('lang-hi').classList.add('bg-blue-500');
+            document.getElementById('lang-en').classList.add('bg-green-500');
+            document.querySelector('html').lang = lang;
+
+
+            renderQuiz();
+        }
+
+        // Initial setup
+        window.onload = () => {
+            shuffleArray(quizData);
+            renderQuiz();
+        };
+
+    </script>
+</body>
+</html>

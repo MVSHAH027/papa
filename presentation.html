@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>પાપ ભીરુતા: આધુનિક જીવન માટે નૈતિક માર્ગદર્શિકા</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Gujarati', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .lang-gu { font-family: 'Noto Sans Gujarati', sans-serif; }
+        .lang-hi { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .lang-en { font-family: 'Inter', sans-serif; }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+            height: 100%;
+            width: 100%;
+        }
+        .slide.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .bullet-point::before {
+            content: '❋';
+            color: #4f46e5; /* Indigo-600 */
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+            line-height: 1.75rem;
+        }
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .lang-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .lang-btn:not(.active) {
+            background-color: white;
+            color: #4f46e5;
+            border-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 h-screen flex flex-col items-center justify-center p-2 sm:p-4">
+
+    <main id="presentation-container" class="w-full h-full max-h-[90vh] sm:h-auto sm:aspect-[16/9] sm:max-h-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6 md:p-10 flex flex-col overflow-hidden">
+        
+        <!-- Slides will be populated by JavaScript -->
+
+    </main>
+
+    <!-- Navigation -->
+    <div class="w-full max-w-4xl mt-2 sm:mt-4 flex items-center justify-between">
+        <button id="prevBtn" class="nav-btn p-3 rounded-full bg-white shadow-md hover:bg-gray-100 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+             <button id="langGuBtn" class="lang-btn active">ગુજરાતી</button>
+             <button id="langHiBtn" class="lang-btn">हिन्दी</button>
+             <button id="langEnBtn" class="lang-btn">English</button>
+        </div>
+        <div id="slideCounter" class="text-center text-gray-700 font-medium px-2"></div>
+        <button id="nextBtn" class="nav-btn p-3 rounded-full bg-white shadow-md hover:bg-gray-100 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        const slideData = [
+            { type: 'title', title: 'પાપ ભીરુતા: આધુનિક જીવન માટે નૈતિક માર્ગદર્શિકા', subtitle: 'જૈન સિદ્ધાંતો પર આધારિત એક વ્યવહારુ અભિગમ' },
+            { type: 'list', title: 'વિષય પરિચય', subtitle: 'પાપ ભીરુતા એટલે શું?', points: ['પાપ કરવાના વિચાર માત્રથી અંતરમાં ડર પેદા થવો.', 'તે માત્ર ભય નથી, પરંતુ આત્મ-રક્ષણ માટેની જાગૃતિ છે.', 'આજના ઝડપી યુગમાં નૈતિકતા અને મૂલ્યોને જીવંત રાખવાની ચાવી.', 'તે કોઈ ધર્મની મર્યાદા નથી, પરંતુ માનવતાનો મૂળભૂત ગુણ છે.', 'બધા સદ્ગુણોનો પાયો અને શ્રેષ્ઠ જીવનની શરૂઆત.'] },
+            { type: 'list', title: 'માણસ હોવું vs માણસાઈથી જીવવું', subtitle: "શું આપણે ખરેખર 'માણસ' છીએ?", points: ['મનુષ્ય જન્મ મળવો એ એક તક છે.', 'માણસાઈ કેળવવી એ એક પસંદગી અને પુરુષાર્થ છે.', "આ બંને વચ્ચેનો મુખ્ય તફાવત 'પાપ' અને 'પુણ્ય'ની સમજ છે.", 'પાપ ભીરુતા એ માણસાઈ તરફનું પ્રથમ અને સૌથી મહત્વનું પગલું છે.', 'આપણા કાર્યો આપણી સાચી ઓળખ બનાવે છે.'] },
+            { type: 'list', title: 'પાપ એટલે શું? (સરળ શબ્દોમાં)', subtitle: 'પાપની વ્યાખ્યા', points: ['કોઈપણ જીવને મન, વચન કે કાયાથી દુઃખ પહોંચાડતું કાર્ય.', 'સ્વાર્થ, અહંકાર કે ખરાબ ભાવનાથી પ્રેરાઈને કરેલું કોઈપણ કર્મ.', 'ફક્ત ક્રિયા જ નહીં, પરંતુ ખરાબ વિચાર અને કડવી વાણી પણ પાપ છે.', 'આપણા અંતરાત્માને મલિન કરતું અને શાંતિ છીનવી લેતું તત્વ.', 'પ્રકૃતિના નિયમો વિરુદ્ધનું આચરણ.'] },
+            { type: 'grid', title: 'પરંપરાગત મહાપાપો (સપ્ત વ્યસનો)', subtitle: 'આ પાપો અનેક બીજા પાપોના મૂળ છે', points: ['જુગાર (Gambling)', 'માંસ-ભક્ષણ (Meat-eating)', 'મદિરાપાન (Alcohol Consumption)', 'વેશ્યાગમન (Prostitution/Adultery)', 'શિકાર (હિંસા) (Hunting/Violence)', 'ચોરી (Theft)', 'પરસ્ત્રી/પરપુરુષ ગમન (Infidelity)'] },
+            { type: 'list', title: 'આધુનિક યુગના "નવા" પાપો', subtitle: 'આજની જીવનશૈલીના જોખમો', points: ['<strong>ડિજિટલ પાપ:</strong> સાયબરબુલિંગ, ફેક ન્યૂઝ, ઓનલાઈન છેતરપિંડી.', '<strong>પર્યાવરણીય પાપ:</strong> પ્રદૂષણ ફેલાવવું, પાણી અને વીજળીનો બગાડ કરવો.', '<strong>આર્થિક પાપ:</strong> ભ્રષ્ટાચાર, કરચોરી, નાણાકીય કૌભાંડો.', '<strong>સામાજિક પાપ:</strong> સંબંધોમાં અપ્રમાણિકતા, માતા-પિતાની અવગણના.', '<strong>માનસિક પાપ:</strong> કોઈની પ્રગતિની ઈર્ષ્યા કરવી, નફરત ફેલાવવી.'] },
+            { type: 'list', title: 'રોજિંદા જીવનના છુપાયેલા પાપો', subtitle: 'જેના પર આપણું ધ્યાન નથી જતું', points: ['<strong>વાણીના પાપ:</strong> નિંદા કરવી, જૂઠું બોલવું, અપશબ્દોનો ઉપયોગ.', '<strong>વિચારના પાપ:</strong> કોઈનું ખરાબ ઈચ્છવું, મનમાં વેર રાખવું.', '<strong>વ્યવહારના પાપ:</strong> ટ્રાફિક નિયમો તોડવા, કતારમાં ઉભા ન રહેવું.', 'કામમાં બેદરકારી અને જવાબદારીમાંથી છટકવું.', 'કોઈની મજબૂરીનો ફાયદો ઉઠાવવો.'] },
+            { type: 'list', title: 'કર્મનો સિદ્ધાંત: જેવું વાવશો, તેવું લણશો', subtitle: 'દરેક ક્રિયાનું પરિણામ નિશ્ચિત છે', points: ['પાપનું ફળ હંમેશા દુઃખ, અશાંતિ અને પીડા જ હોય છે.', 'આ ફળ કદાચ તરત ન મળે, પણ મળે છે ચોક્કસ.', 'કોઈપણ પાપ ક્યારેય છુપાવી શકાતું નથી, સમય તેને સામે લાવે છે.', 'કર્મનો હિસાબ કોઈ માફ કરતું નથી, તે ભોગવવો જ પડે છે.', '<strong>ઉદાહરણ:</strong> દ્રૌપદીના વસ્ત્રાહરણ સમયે ભીષ્મનું મૌન રહેવાનું પાપ.'] },
+            { type: 'list', title: 'સાચો ડર vs. ખોટો ડર', subtitle: 'તમે શેનાથી ડરો છો?', points: ['<strong>ખોટો ડર:</strong> પાપ કરતાં પકડાઈ જવાનો, બદનામીનો કે સજાનો ડર. <span class="text-base block pl-8 text-gray-600">(શું તમે માત્ર CCTV કેમેરા હોય ત્યાં જ નિયમ પાળો છો?)</span>', '<strong>સાચો ડર:</strong> પાપના ખરાબ પરિણામનો અને આત્માની અશુદ્ધિનો ડર.', 'સાચી પાપ ભીરુતા કોઈના દેખતા નહીં, એકાંતમાં પણ પાપ કરતાં રોકે છે.', 'તે અંતરાત્માનો અવાજ છે, જે આપણને સાચા માર્ગ પર રાખે છે.'] },
+            { type: 'list', title: 'નાના પાપની મોટી અસર', subtitle: '"એકવાર કરવાથી શું ફરક પડે છે?"', points: ['આ વિચાર જ મોટા પાપનો દરવાજો ખોલે છે.', 'નાવમાં પડેલું એક નાનકડું કાણું પણ આખી નાવને ડુબાડી શકે છે.', 'નાની-નાની ખરાબ આદતો જ ભવિષ્યમાં મોટા પાપનું સ્વરૂપ લે છે.', 'એક નાનું જૂઠ છુપાવવા માટે બીજા અનેક જૂઠ બોલવા પડે છે.', 'કોઈપણ પાપને ક્યારેય નાનું ન ગણવું.'] },
+            { type: 'list', title: 'પાપ ભીરુતા કેવી રીતે કેળવવી? (માર્ગ-૧)', subtitle: 'જ્ઞાન અને ચિંતન', points: ['<strong>ધર્મશ્રવણ:</strong> જ્ઞાની અને અનુભવી લોકોને સાંભળો.', '<strong>સદ્‌વાંચન:</strong> સારા પુસ્તકો, લેખો અને વિચારોનું વાંચન કરો.', '<strong>ચિંતન:</strong> પાપના ભયંકર પરિણામો વિશે શાંતિથી વિચારો.', 'મહાન પુરુષોના જીવનમાંથી પ્રેરણા લો.', 'આનાથી વિવેકબુદ્ધિ જાગૃત થાય છે અને સાચા-ખોટાનો ભેદ સમજાય છે.'] },
+            { type: 'list', title: 'પાપ ભીરુતા કેવી રીતે કેળવવી? (માર્ગ-૨)', subtitle: 'સંગત અને વાતાવરણ', points: ['<strong>"જેવી સંગત, તેવી રંગત."</strong>', 'નકારાત્મક અને પાપમાં પ્રેરણા આપતા લોકોથી દૂર રહો.', 'સારા, સંસ્કારી અને સકારાત્મક મિત્રો બનાવો.', 'જે વસ્તુઓ મનને બગાડે (દા.ત. હિંસક ફિલ્મો, અશ્લીલતા) તેનાથી બચો.', 'તમારા ઘર અને કાર્યસ્થળનું વાતાવરણ શુદ્ધ રાખો.'] },
+            { type: 'list', title: 'વ્યવહારુ ઉદાહરણ: માનવતાની વકીલાત', subtitle: 'એક પ્રેરક પ્રસંગ', points: ['એક વકીલના દીકરાએ ગરીબ ભાડૂત પાસેથી ઘર ખાલી કરાવવાનો કેસ ન લડ્યો.', 'ઊલટું, તેણે પોતાની બચતમાંથી તે ગરીબનું ભાડું ભરી દીધું.', 'પિતાએ ગર્વથી કહ્યું: "વકીલાત હંમેશા સત્યની કરજે, માત્ર અસીલની નહીં."', 'આ છે પાપથી બચીને પુણ્ય કમાવવાનો સાચો માર્ગ.'] },
+            { type: 'list', title: 'પાપ ભીરુતાથી પાપવિરતિ સુધીની યાત્રા', subtitle: 'ડરથી ત્યાગ સુધીનો માર્ગ', points: ['<strong>પ્રથમ પગથિયું:</strong> પાપ કરવાથી ડરવું (પાપ ભીરુતા).', '<strong>બીજું પગથિયું:</strong> પાપના કારણો અને પ્રસંગોનો ત્યાગ કરવો.', '<strong>અંતિમ લક્ષ્ય:</strong> મન-વચન-કર્મથી પાપનો સંપૂર્ણ ત્યાગ (પાપવિરતિ).', 'આ યાત્રા આત્મ-સુધાર, સંયમ અને સંતોષથી શક્ય બને છે.', 'આ જ શુદ્ધ અને શાંતિપૂર્ણ જીવનનો રાજમાર્ગ છે.'] },
+            { type: 'list', title: 'સારાંશ: યાદ રાખવાના મુદ્દા', subtitle: 'આજના જીવન માટે સંદેશ', points: ['પાપ એ માત્ર ધાર્મિક શબ્દ નથી, તે આપણી ખુશીનો દુશ્મન છે.', 'પકડાઈ જવાના ડરથી નહીં, આત્માના પતનના ડરથી પાપથી બચો.', 'નાનામાં નાનું પાપ પણ નજરઅંદાજ ન કરો.', 'સારી સંગત અને સદ્‌વિચાર એ પાપ સામેની શ્રેષ્ઠ રસી છે.', 'દરરોજ રાત્રે સૂતા પહેલાં પોતાના કાર્યોનું વિશ્લેષણ કરો.'] },
+            { type: 'final', title: 'આભાર', subtitle: 'પ્રશ્નો અને ચર્ચા માટે ખુલ્લું મંચ', final_message: 'શુદ્ધ અને નૈતિક જીવન જીવવાનો સંકલ્પ કરીએ.' }
+        ];
+
+        const translations = {
+            gu: {
+                slideData: slideData, // already in Gujarati
+                counter: (curr, total) => `સ્લાઇડ ${curr} / ${total}`,
+            },
+            hi: {
+                counter: (curr, total) => `स्लाइड ${curr} / ${total}`,
+                slideData: [
+                    { type: 'title', title: 'पाप भीरुता: आधुनिक जीवन के लिए नैतिक मार्गदर्शिका', subtitle: 'जैन सिद्धांतों पर आधारित एक व्यावहारिक दृष्टिकोण' },
+                    { type: 'list', title: 'विषय परिचय', subtitle: 'पाप भीरुता क्या है?', points: ['पाप करने के विचार मात्र से अंतर्मन में डर पैदा होना।', 'यह केवल भय नहीं, बल्कि आत्म-रक्षा के लिए जागरूकता है।', 'आज के तेज़ युग में नैतिकता और मूल्यों को जीवित रखने की कुंजी।', 'यह किसी धर्म तक सीमित नहीं, बल्कि मानवता का मूल गुण है।', 'सभी सद्गुणों का आधार और श्रेष्ठ जीवन की शुरुआत।'] },
+                    { type: 'list', title: 'इंसान होना बनाम इंसानियत से जीना', subtitle: "क्या हम वास्तव में 'इंसान' हैं?", points: ['मनुष्य जन्म मिलना एक अवसर है।', 'इंसानियत विकसित करना एक विकल्प और प्रयास है।', "इन दोनों के बीच मुख्य अंतर 'पाप' और 'पुण्य' की समझ है।", 'पाप भीरुता इंसानियत की ओर पहला और सबसे महत्वपूर्ण कदम है।', 'हमारे कर्म ही हमारी सच्ची पहचान बनाते हैं।'] },
+                    { type: 'list', title: 'पाप क्या है? (सरल शब्दों में)', subtitle: 'पाप की परिभाषा', points: ['किसी भी जीव को मन, वचन या शरीर से दुःख पहुँचाने वाला कार्य।', 'स्वार्थ, अहंकार या बुरी भावना से प्रेरित कोई भी कर्म।', 'सिर्फ क्रिया ही नहीं, बल्कि बुरे विचार और कड़वी वाणी भी पाप है।', 'हमारी अंतरात्मा को मैला करने और शांति छीनने वाला तत्व।', 'प्रकृति के नियमों के विरुद्ध आचरण।'] },
+                    { type: 'grid', title: 'पारंपरिक महापाप (सात व्यसन)', subtitle: 'ये पाप कई अन्य पापों की जड़ हैं', points: ['जुआ (Gambling)', 'मांस-भक्षण (Meat-eating)', 'शराब (Alcohol Consumption)', 'वेश्यावृत्ति (Prostitution/Adultery)', 'शिकार (हिंसा) (Hunting/Violence)', 'चोरी (Theft)', 'परस्त्री/परपुरुष गमन (Infidelity)'] },
+                    { type: 'list', title: 'आधुनिक युग के "नए" पाप', subtitle: 'आज की जीवनशैली के खतरे', points: ['<strong>डिजिटल पाप:</strong> साइबरबुलिंग, फेक न्यूज, ऑनलाइन धोखाधड़ी।', '<strong>पर्यावरणीय पाप:</strong> प्रदूषण फैलाना, पानी और बिजली बर्बाद करना।', '<strong>आर्थिक पाप:</strong> भ्रष्टाचार, कर चोरी, वित्तीय घोटाले।', '<strong>सामाजिक पाप:</strong> रिश्तों में बेईमानी, माता-पिता की उपेक्षा।', '<strong>मानसिक पाप:</strong> किसी की प्रगति से ईर्ष्या करना, नफरत फैलाना।'] },
+                    { type: 'list', title: 'दैनिक जीवन के छिपे हुए पाप', subtitle: 'जिन पर हमारा ध्यान नहीं जाता', points: ['<strong>वाणी के पाप:</strong> निंदा करना, झूठ बोलना, अपशब्दों का प्रयोग।', '<strong>विचारों के पाप:</strong> किसी का बुरा चाहना, मन में द्वेष रखना।', '<strong>व्यवहार के पाप:</strong> ट्रैफिक नियम तोड़ना, कतार में खड़ा न होना।', 'काम में लापरवाही और जिम्मेदारी से बचना।', 'किसी की मजबूरी का फायदा उठाना।'] },
+                    { type: 'list', title: 'कर्म का सिद्धांत: जैसा बोओगे, वैसा काटोगे', subtitle: 'हर क्रिया का परिणाम निश्चित है', points: ['पाप का फल हमेशा दुःख, अशांति और पीड़ा ही होता है।', 'यह फल शायद तुरंत न मिले, पर मिलता ज़रूर है।', 'कोई भी पाप कभी छिपाया नहीं जा सकता, समय उसे सामने लाता है।', 'कर्म का हिसाब कोई माफ नहीं करता, उसे भुगतना ही पड़ता है।', '<strong>उदाहरण:</strong> द्रौपदी के चीरहरण के समय भीष्म का मौन रहना।'] },
+                    { type: 'list', title: 'सच्चा डर बनाम झूठा डर', subtitle: 'आप किससे डरते हैं?', points: ['<strong>झूठा डर:</strong> पाप करते हुए पकड़े जाने, बदनामी या सज़ा का डर। <span class="text-base block pl-8 text-gray-600">(क्या आप केवल CCTV कैमरे के सामने नियम का पालन करते हैं?)</span>', '<strong>सच्चा डर:</strong> पाप के बुरे परिणाम और आत्मा के पतन का डर।', 'सच्ची पाप भीरुता किसी के देखने पर नहीं, एकांत में भी पाप करने से रोकती है।', 'यह अंतरात्मा की आवाज़ है, जो हमें सही रास्ते पर रखती है।'] },
+                    { type: 'list', title: 'छोटे पाप का बड़ा प्रभाव', subtitle: '"एक बार करने से क्या फर्क पड़ता है?"', points: ['यही सोच बड़े पाप का दरवाज़ा खोलती है।', 'नाव में एक छोटा सा छेद भी पूरी नाव को डुबो सकता है।', 'छोटी-छोटी बुरी आदतें ही भविष्य में बड़े पाप का रूप लेती हैं।', 'एक छोटा झूठ छिपाने के लिए कई और झूठ बोलने पड़ते हैं।', 'किसी भी पाप को कभी छोटा न समझें।'] },
+                    { type: 'list', title: 'पाप भीरुता कैसे विकसित करें? (मार्ग-१)', subtitle: 'ज्ञान और चिंतन', points: ['<strong>धर्मश्रवण:</strong> ज्ञानी और अनुभवी लोगों को सुनें।', '<strong>सद्‌वाचन:</strong> अच्छी किताबें, लेख और विचार पढ़ें।', '<strong>चिंतन:</strong> पाप के भयानक परिणामों के बारे में शांति से सोचें।', 'महान पुरुषों के जीवन से प्रेरणा लें।', 'इससे विवेक जागृत होता है और सही-गलत का भेद समझ आता है।'] },
+                    { type: 'list', title: 'पाप भीरुता कैसे विकसित करें? (मार्ग-२)', subtitle: 'संगति और वातावरण', points: ['<strong>"जैसी संगति, वैसी रंगत।"</strong>', 'नकारात्मक और पाप के लिए प्रेरित करने वाले लोगों से दूर रहें।', 'अच्छे, संस्कारी और सकारात्मक दोस्त बनाएँ।', 'जो चीजें मन को बिगाड़ती हैं (जैसे हिंसक फिल्में, अश्लीलता) उनसे बचें।', 'अपने घर और कार्यस्थल का वातावरण शुद्ध रखें।'] },
+                    { type: 'list', title: 'व्यावहारिक उदाहरण: मानवता की वकालत', subtitle: 'एक प्रेरक प्रसंग', points: ['एक वकील के बेटे ने गरीब किरायेदार से घर खाली कराने का केस नहीं लड़ा।', 'बल्कि, उसने अपनी बचत से उस गरीब का किराया भर दिया।', 'पिता ने गर्व से कहा: "वकालत हमेशा सत्य की करना, सिर्फ मुवक्किल की नहीं।"', 'यह पाप से बचकर पुण्य कमाने का सही तरीका है।'] },
+                    { type: 'list', title: 'पाप भीरुता से पापविरति तक की यात्रा', subtitle: 'डर से त्याग तक का मार्ग', points: ['<strong>पहला कदम:</strong> पाप करने से डरना (पाप भीरुता)।', '<strong>दूसरा कदम:</strong> पाप के कारणों और अवसरों का त्याग करना।', '<strong>अंतिम लक्ष्य:</strong> मन, वचन और कर्म से पाप का पूर्ण त्याग (पापविरति)।', 'यह यात्रा आत्म-सुधार, संयम और संतोष से संभव है।', 'यही शुद्ध और शांतिपूर्ण जीवन का राजमार्ग है।'] },
+                    { type: 'list', title: 'सारांश: याद रखने योग्य बातें', subtitle: 'आज के जीवन के लिए संदेश', points: ['पाप सिर्फ एक धार्मिक शब्द नहीं, यह हमारी खुशी का दुश्मन है।', 'पकड़े जाने के डर से नहीं, आत्मा के पतन के डर से पाप से बचें।', 'छोटे से छोटे पाप को भी नज़रअंदाज़ न करें।', 'अच्छी संगति और अच्छे विचार पाप के खिलाफ सबसे अच्छी वैक्सीन हैं।', 'हर रात सोने से पहले अपने कर्मों का विश्लेषण करें।'] },
+                    { type: 'final', title: 'धन्यवाद', subtitle: 'प्रश्नों और चर्चा के लिए खुला मंच', final_message: 'आइए, एक शुद्ध और नैतिक जीवन जीने का संकल्प लें।' }
+                ]
+            },
+            en: {
+                counter: (curr, total) => `Slide ${curr} / ${total}`,
+                slideData: [
+                    { type: 'title', title: 'Fear of Sin (Pap Bhiruta): A Moral Guide for Modern Life', subtitle: 'A Practical Approach Based on Jain Principles' },
+                    { type: 'list', title: 'Introduction', subtitle: 'What is Fear of Sin?', points: ['To feel fear deep inside at the mere thought of sinning.', 'It is not just fear, but an awareness for self-protection.', 'The key to keeping ethics and values alive in today\'s fast-paced era.', 'It is not limited to any religion, but is a fundamental human quality.', 'The foundation of all virtues and the beginning of a noble life.'] },
+                    { type: 'list', title: 'Being Human vs. Living with Humanity', subtitle: "Are we truly 'Human'?", points: ['Being born as a human is an opportunity.', 'Cultivating humanity is a choice and an effort.', 'The main difference between the two is the understanding of \'sin\' and \'virtue\'.', 'Fear of sin is the first and most crucial step towards humanity.', 'Our actions define our true identity.'] },
+                    { type: 'list', title: 'What is Sin? (In Simple Terms)', subtitle: 'Definition of Sin', points: ['Any act that causes pain to any living being through mind, speech, or body.', 'Any deed motivated by selfishness, ego, or negative intentions.', 'Not just actions, but also negative thoughts and harsh words are sins.', 'An element that tarnishes our conscience and takes away our peace.', 'Conduct that goes against the laws of nature.'] },
+                    { type: 'grid', title: 'Traditional Major Sins (The Seven Vices)', subtitle: 'These sins are the root of many other sins', points: ['Gambling', 'Meat-eating', 'Alcohol Consumption', 'Prostitution/Adultery', 'Hunting (Violence)', 'Theft', 'Infidelity'] },
+                    { type: 'list', title: 'The "New" Sins of the Modern Age', subtitle: 'Risks of Today\'s Lifestyle', points: ['<strong>Digital Sin:</strong> Cyberbullying, fake news, online fraud.', '<strong>Environmental Sin:</strong> Spreading pollution, wasting water and electricity.', '<strong>Economic Sin:</strong> Corruption, tax evasion, financial scams.', '<strong>Social Sin:</strong> Dishonesty in relationships, neglecting parents.', '<strong>Mental Sin:</strong> Envying someone\'s progress, spreading hatred.'] },
+                    { type: 'list', title: 'Hidden Sins of Daily Life', subtitle: 'Those We Often Overlook', points: ['<strong>Sins of Speech:</strong> Gossiping, lying, using abusive language.', '<strong>Sins of Thought:</strong> Wishing ill for others, holding grudges.', '<strong>Sins of Conduct:</strong> Breaking traffic rules, not waiting in line.', 'Negligence at work and evading responsibility.', 'Taking advantage of someone\'s vulnerability.'] },
+                    { type: 'list', title: 'The Principle of Karma: As You Sow, So Shall You Reap', subtitle: 'Every Action Has a Definite Consequence', points: ['The fruit of sin is always sorrow, turmoil, and pain.', 'This fruit may not appear immediately, but it surely does.', 'No sin can ever be hidden; time brings it to light.', 'No one is exempt from the consequences of their karma; it must be faced.', '<strong>Example:</strong> Bhishma\'s silence during Draupadi\'s disrobing.'] },
+                    { type: 'list', title: 'True Fear vs. False Fear', subtitle: 'What Are You Afraid Of?', points: ['<strong>False Fear:</strong> The fear of getting caught, of shame, or of punishment. <span class="text-base block pl-8 text-gray-600">(Do you follow rules only when there\'s a CCTV camera?)</span>', '<strong>True Fear:</strong> The fear of the negative consequences of sin and the impurity of the soul.', 'True fear of sin prevents you from sinning even in solitude, not just in public.', 'It is the voice of your conscience that keeps you on the right path.'] },
+                    { type: 'list', title: 'The Big Impact of Small Sins', subtitle: '"What difference does it make if I do it just once?"', points: ['This very thought opens the door to bigger sins.', 'Even a small hole can sink a large ship.', 'Small bad habits eventually take the form of major sins.', 'One small lie requires many others to cover it up.', 'Never underestimate any sin.'] },
+                    { type: 'list', title: 'How to Cultivate Fear of Sin? (Path 1)', subtitle: 'Knowledge and Contemplation', points: ['<strong>Spiritual Listening:</strong> Listen to wise and experienced people.', '<strong>Good Reading:</strong> Read good books, articles, and thoughts.', '<strong>Contemplation:</strong> Think peacefully about the dire consequences of sin.', 'Draw inspiration from the lives of great personalities.', 'This awakens discretion and helps distinguish right from wrong.'] },
+                    { type: 'list', title: 'How to Cultivate Fear of Sin? (Path 2)', subtitle: 'Company and Environment', points: ['<strong>"A man is known by the company he keeps."</strong>', 'Stay away from negative people who encourage sinful acts.', 'Make good, cultured, and positive friends.', 'Avoid things that corrupt the mind (e.g., violent movies, obscenity).', 'Keep the atmosphere of your home and workplace pure.'] },
+                    { type: 'list', title: 'A Practical Example: Advocating for Humanity', subtitle: 'An Inspiring Incident', points: ['A lawyer\'s son did not take up the case to evict a poor tenant.', 'Instead, he paid the poor man\'s rent from his own savings.', 'His father proudly said: "Always practice the law for truth, not just for the client."', 'This is the true way to earn virtue by avoiding sin.'] },
+                    { type: 'list', title: 'The Journey from Fear of Sin to Renunciation of Sin', subtitle: 'The Path from Fear to Abstinence', points: ['<strong>First Step:</strong> To be afraid of committing sin (Pap Bhiruta).', '<strong>Second Step:</strong> To renounce the causes and occasions of sin.', '<strong>Final Goal:</strong> Complete renunciation of sin in mind, speech, and deed (Pap-virati).', 'This journey is made possible through self-improvement, restraint, and contentment.', 'This is the highway to a pure and peaceful life.'] },
+                    { type: 'list', title: 'Summary: Points to Remember', subtitle: 'A Message for Modern Life', points: ['Sin is not just a religious term; it is the enemy of our happiness.', 'Avoid sin not for fear of being caught, but for fear of spiritual decline.', 'Do not overlook even the smallest sin.', 'Good company and noble thoughts are the best vaccine against sin.', 'Analyze your actions every night before you sleep.'] },
+                    { type: 'final', title: 'Thank You', subtitle: 'Open Forum for Questions and Discussion', final_message: 'Let\'s resolve to live a pure and ethical life.' }
+                ]
+            }
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('presentation-container');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slideCounter');
+            const langButtons = {
+                gu: document.getElementById('langGuBtn'),
+                hi: document.getElementById('langHiBtn'),
+                en: document.getElementById('langEnBtn'),
+            };
+
+            let currentSlide = 0;
+            let currentLang = 'gu';
+            let slides = [];
+            
+            function createSlideHTML(slide) {
+                switch(slide.type) {
+                    case 'title':
+                        return `<div class="slide flex-col justify-center items-center text-center">
+                                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-800">${slide.title}</h1>
+                                    <p class="text-lg sm:text-xl mt-4 text-gray-700">${slide.subtitle}</p>
+                                </div>`;
+                    case 'list':
+                        return `<div class="slide flex-col justify-center">
+                                    <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-2 sm:mb-4">${slide.title}</h2>
+                                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-6">${slide.subtitle}</h3>
+                                    <ul class="space-y-2 sm:space-y-3 text-base sm:text-lg md:text-xl text-left">
+                                        ${slide.points.map(p => `<li class="flex items-start bullet-point">${p}</li>`).join('')}
+                                    </ul>
+                                </div>`;
+                    case 'grid':
+                         return `<div class="slide flex-col justify-center">
+                                    <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-2 sm:mb-4">${slide.title}</h2>
+                                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-6">${slide.subtitle}</h3>
+                                    <ul class="space-y-2 sm:space-y-3 text-base sm:text-lg md:text-xl text-left grid grid-cols-1 md:grid-cols-2 gap-x-8">
+                                        ${slide.points.map(p => `<li class="flex items-start bullet-point">${p}</li>`).join('')}
+                                    </ul>
+                                </div>`;
+                    case 'final':
+                         return `<div class="slide flex-col justify-center items-center text-center">
+                                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-800">${slide.title}</h1>
+                                    <p class="text-lg sm:text-xl mt-4 text-gray-700">${slide.subtitle}</p>
+                                    <p class="text-lg sm:text-xl mt-8 font-semibold text-indigo-600">${slide.final_message}</p>
+                                </div>`;
+                }
+            }
+
+            function renderSlides(lang) {
+                currentLang = lang;
+                const data = translations[lang].slideData;
+                container.innerHTML = data.map(createSlideHTML).join('');
+                slides = document.querySelectorAll('.slide');
+                showSlide(currentSlide);
+
+                // Update lang buttons
+                Object.keys(langButtons).forEach(key => {
+                    langButtons[key].classList.toggle('active', key === lang);
+                });
+                 // Update body font family
+                document.body.className = document.body.className.replace(/\blang-..\b/g, '');
+                document.body.classList.add(`lang-${lang}`);
+            }
+
+            function showSlide(index) {
+                if (index < 0 || index >= slides.length) return;
+                currentSlide = index;
+
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                
+                slideCounter.textContent = translations[currentLang].counter(index + 1, slides.length);
+
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === slides.length - 1;
+            }
+
+            nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+            prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+
+            Object.keys(langButtons).forEach(key => {
+                langButtons[key].addEventListener('click', () => renderSlides(key));
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'ArrowRight'){ nextBtn.click(); } 
+                else if(e.key === 'ArrowLeft'){ prevBtn.click(); }
+            });
+
+            // Initial setup
+            renderSlides('gu');
+        });
+    </script>
+</body>
+</html>
+

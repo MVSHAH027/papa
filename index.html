@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>પાપ ભીરુતા: નૈતિક માર્ગદર્શિકા</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic styling for fonts and smooth scrolling */
+        body {
+            font-family: 'Inter', 'Noto Sans Gujarati', sans-serif;
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Specific font families for each language to ensure correct rendering */
+        .lang-gu { font-family: 'Noto Sans Gujarati', sans-serif; }
+        .lang-hi { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .lang-en { font-family: 'Inter', sans-serif; }
+        
+        /* Styling for the language buttons */
+        .lang-btn {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .lang-btn.active {
+            transform: scale(1.05);
+            background-color: #ffffff;
+            color: #4f46e5; /* Indigo color */
+            box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Language Selector Buttons -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-center items-center space-x-3">
+            <button id="lang-gu" class="lang-btn active text-white font-bold py-2 px-5 rounded-full bg-indigo-500" onclick="changeLanguage('gu')">ગુજરાતી</button>
+            <button id="lang-hi" class="lang-btn text-white font-bold py-2 px-5 rounded-full bg-indigo-500" onclick="changeLanguage('hi')">हिन्दी</button>
+            <button id="lang-en" class="lang-btn text-white font-bold py-2 px-5 rounded-full bg-indigo-500" onclick="changeLanguage('en')">English</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 data-key="main_title" class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-3">પાપ ભીરુતા</h1>
+            <p data-key="main_subtitle" class="text-lg text-gray-600">જીવનને સાચી દિશા આપતી નૈતિક સમજ</p>
+        </header>
+
+        <!-- YouTube Videos Section -->
+        <section class="mb-12">
+            <h2 data-key="video_section_title" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 border-b-2 border-indigo-200 pb-2">વિડિઓ દ્વારા સમજ</h2>
+            
+            <!-- Video 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 transform hover:scale-[1.02] transition-transform duration-300">
+                <div class="p-6">
+                    <h3 data-key="video1_title" class="text-xl font-bold text-indigo-800 mb-2">પાપ, કર્મફળ અને પાપભીરુતા</h3>
+                    <p data-key="video1_desc" class="text-gray-600 mb-4">આ વિડિઓમાં પાપ, કર્મના સિદ્ધાંત અને પાપથી ડરવાના સાચા અર્થને ઊંડાણપૂર્વક સમજાવવામાં આવ્યું છે. તે જીવનમાં નૈતિકતાનું મહત્વ સ્પષ્ટ કરે છે.</p>
+                    <a href="https://youtu.be/4gdDmlVx1Gw" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                        <span data-key="video_button_text">YouTube પર જુઓ</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+                <div class="p-6">
+                    <h3 data-key="video2_title" class="text-xl font-bold text-indigo-800 mb-2">પાપભીરુતા: ડર નહીં, ડહાપણ</h3>
+                    <p data-key="video2_desc" class="text-gray-600 mb-4">પાપભીરુતા એ નકારાત્મક ડર નથી, પરંતુ આત્મ-જાગૃતિ અને ડહાપણની નિશાની છે. આ વિડિઓ તે વિચારને સુંદર રીતે રજૂ કરે છે.</p>
+                    <a href="https://youtu.be/Jqid9g3-0po" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                        <span data-key="video_button_text">YouTube પર જુઓ</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Links to HTML pages Section -->
+        <section>
+            <h2 data-key="links_section_title" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 border-b-2 border-indigo-200 pb-2">વધુ જાણો અને ચકાસો</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Presentation Link -->
+                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 text-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    <h3 data-key="presentation_title" class="text-2xl font-bold mb-2">નૈતિક માર્ગદર્શિકા</h3>
+                    <p data-key="presentation_desc" class="mb-6">જૈન સિદ્ધાંતો પર આધારિત પાપ ભીરુતાની ઊંડી સમજ આપતું એક વિસ્તૃત પ્રેઝન્ટેશન.</p>
+                    <a href="./presentation.html" data-key="presentation_button" class="bg-white text-indigo-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-colors duration-300 shadow-md">પ્રેઝન્ટેશન જુઓ</a>
+                </div>
+                
+                <!-- Quiz Link -->
+                <div class="bg-gradient-to-br from-green-400 to-teal-500 text-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 data-key="quiz_title" class="text-2xl font-bold mb-2">પાપ ભીરુતા ક્વિઝ</h3>
+                    <p data-key="quiz_desc" class="mb-6">તમારી નૈતિક સમજને ચકાસો અને જાણો કે તમે આ વિષયને કેટલો સારી રીતે સમજો છો.</p>
+                    <a href="./quiz.html" data-key="quiz_button" class="bg-white text-teal-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-colors duration-300 shadow-md">ક્વિઝ શરૂ કરો</a>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <p data-key="footer_name" class="font-bold text-lg">મનીષ વી. શાહ</p>
+            <p data-key="footer_contact" class="text-gray-400">વોટ્સએપ: 94299 26447 | વડોદરા</p>
+        </div>
+    </footer>
+
+    <script>
+        // Store all translatable text in a single object
+        const content = {
+            gu: {
+                main_title: "પાપ ભીરુતા",
+                main_subtitle: "જીવનને સાચી દિશા આપતી નૈતિક સમજ",
+                video_section_title: "વિડિઓ દ્વારા સમજ",
+                video1_title: "પાપ, કર્મફળ અને પાપભીરુતા",
+                video1_desc: "આ વિડિઓમાં પાપ, કર્મના સિદ્ધાંત અને પાપથી ડરવાના સાચા અર્થને ઊંડાણપૂર્વક સમજાવવામાં આવ્યું છે. તે જીવનમાં નૈતિકતાનું મહત્વ સ્પષ્ટ કરે છે.",
+                video2_title: "પાપભીરુતા: ડર નહીં, ડહાપણ",
+                video2_desc: "પાપભીરુતા એ નકારાત્મક ડર નથી, પરંતુ આત્મ-જાગૃતિ અને ડહાપણની નિશાની છે. આ વિડિઓ તે વિચારને સુંદર રીતે રજૂ કરે છે.",
+                video_button_text: "YouTube પર જુઓ",
+                links_section_title: "વધુ જાણો અને ચકાસો",
+                presentation_title: "નૈતિક માર્ગદર્શિકા",
+                presentation_desc: "જૈન સિદ્ધાંતો પર આધારિત પાપ ભીરુતાની ઊંડી સમજ આપતું એક વિસ્તૃત પ્રેઝન્ટેશન.",
+                presentation_button: "પ્રેઝન્ટેશન જુઓ",
+                quiz_title: "પાપ ભીરુતા ક્વિઝ",
+                quiz_desc: "તમારી નૈતિક સમજને ચકાસો અને જાણો કે તમે આ વિષયને કેટલો સારી રીતે સમજો છો.",
+                quiz_button: "ક્વિઝ શરૂ કરો",
+                footer_name: "મનીષ વી. શાહ",
+                footer_contact: "વોટ્સએપ: 94299 26447 | વડોદરા"
+            },
+            hi: {
+                main_title: "पाप भीरुता",
+                main_subtitle: "जीवन को सही दिशा देने वाली नैतिक समझ",
+                video_section_title: "वीडियो द्वारा समझें",
+                video1_title: "पाप, कर्मफल और पापभीरुता",
+                video1_desc: "इस वीडियो में पाप, कर्म के सिद्धांत और पाप से डरने के सही अर्थ को गहराई से समझाया गया है। यह जीवन में नैतिकता के महत्व को स्पष्ट करता है।",
+                video2_title: "पापभीरुता: डर नहीं, विवेक",
+                video2_desc: "पापभीरुता एक नकारात्मक डर नहीं, बल्कि आत्म-जागरूकता और विवेक की निशानी है। यह वीडियो इस विचार को खूबसूरती से प्रस्तुत करता है।",
+                video_button_text: "YouTube पर देखें",
+                links_section_title: "और जानें और परखें",
+                presentation_title: "नैतिक मार्गदर्शिका",
+                presentation_desc: "जैन सिद्धांतों पर आधारित पाप भीरुता की गहरी समझ देने वाली एक विस्तृत प्रस्तुति।",
+                presentation_button: "प्रस्तुति देखें",
+                quiz_title: "पाप भीरुता प्रश्नोत्तरी",
+                quiz_desc: "अपनी नैतिक समझ का परीक्षण करें और जानें कि आप इस विषय को कितनी अच्छी तरह समझते हैं।",
+                quiz_button: "प्रश्नोत्तरी शुरू करें",
+                footer_name: "मनीष वी. शाह",
+                footer_contact: "व्हाट्सएप: 94299 26447 | वडोदरा"
+            },
+            en: {
+                main_title: "Fear of Sin (Paap Bhiruta)",
+                main_subtitle: "A Moral Compass for Navigating Life",
+                video_section_title: "Understanding Through Videos",
+                video1_title: "Sin, Karma, and The Fear of Sin",
+                video1_desc: "This video provides a deep dive into the concepts of sin, the law of karma, and the true meaning of fearing sin, highlighting the importance of ethics in life.",
+                video2_title: "Fear of Sin: Not Fear, but Wisdom",
+                video2_desc: "The fear of sin is not a negative emotion, but a sign of self-awareness and wisdom. This video beautifully presents this concept.",
+                video_button_text: "Watch on YouTube",
+                links_section_title: "Learn More & Test Yourself",
+                presentation_title: "A Moral Guide",
+                presentation_desc: "A detailed presentation offering a deep understanding of 'Paap Bhiruta' based on Jain principles.",
+                presentation_button: "View Presentation",
+                quiz_title: "Moral Guidance Quiz",
+                quiz_desc: "Test your ethical understanding and see how well you grasp these important concepts.",
+                quiz_button: "Start Quiz",
+                footer_name: "Manish V. Shah",
+                footer_contact: "WhatsApp: 94299 26447 | Vadodara"
+            }
+        };
+
+        // Function to change the language of the page
+        function changeLanguage(lang) {
+            // Set the lang attribute on the HTML and body tags for font rendering
+            document.documentElement.lang = lang;
+            document.body.className = `bg-gray-50 text-gray-800 lang-${lang}`;
+            
+            // Get all elements that need translation
+            const elementsToTranslate = document.querySelectorAll('[data-key]');
+            
+            // Loop through elements and update their text content
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (content[lang][key]) {
+                    element.textContent = content[lang][key];
+                }
+            });
+
+            // Update active state for language buttons
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(button => {
+                if (button.id === `lang-${lang}`) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        // Set the initial language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage('gu');
+        });
+    </script>
+
+</body>
+</html>
+
